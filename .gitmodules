@@ -1,0 +1,3 @@
+[submodule "lib_sc"]
+	path = lib_sc
+	url = https://github.com/rand00/ocaml_supercollider_interface.git
