@@ -39,12 +39,12 @@ let test = function
   | Some (x, y, z) -> Printf.printf "x = %d, y = %d, z = %d\n" x y z
   | None -> print_endline "No values were found"
 
-let s_sinew c = S.start c "sinew" [] 
+let s_sinew c = S.synth c "sinew" [] 
 
 let set_freq s = function
   | Some v -> 
     sleep 0.01; 
-    S.modify s [("freq", `I v)]
+    S.set s [("freq", `I v)]
   | None -> ()
 
 let apply_x f = function
