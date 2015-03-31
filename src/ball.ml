@@ -1,5 +1,6 @@
 
 open Batteries
+open Core_rand00
 
 module S = SC.Synth
 

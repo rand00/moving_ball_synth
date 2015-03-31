@@ -1,3 +1,6 @@
 [submodule "lib_sc"]
 	path = lib_sc
 	url = https://github.com/rand00/ocaml_supercollider_interface.git
+[submodule "lib_core-rand00"]
+	path = lib_core-rand00
+	url = https://github.com/rand00/Core_rand00.git
