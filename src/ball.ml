@@ -68,7 +68,6 @@ let _ =
   at_exit (fun () -> SC.Client.quit_all c);
 
   while true do 
-    (*goto use some option-/result-monad bind + map instead?*)
     match_xyz (read_line ()) 
     >>| apply_x (bounce_minval freq_base)
     >>| Int.mul 2
