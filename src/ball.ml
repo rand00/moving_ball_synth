@@ -62,12 +62,13 @@ let _ =
     else 300 
   in
   let _ = SC.Server.run_script () in 
-  let _ = sleep 10. in 
+  let _ = sleep 10. in (*goto make script-run return status mailbox instead*)
   let c = SC.Client.make () in
   let s = s_sinew c in
   at_exit (fun () -> SC.Client.quit_all c);
 
-  while true do
+  while true do 
+    (*goto use some option-/result-monad bind + map instead?*)
     match_xyz (read_line ()) 
     >>| apply_x (bounce_minval freq_base)
     >>| Int.mul 2
