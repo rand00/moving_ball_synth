@@ -1,0 +1,44 @@
+(* Ensure that we're in the root of the project. This is helpful for
+editor integration where the cwd might not be the root of the
+project.*)
+let root =
+  let rec search path = match Sys.file_exists (path ^ "/.ocamlinit") with
+    | false -> search (Filename.dirname path)
+    | true -> path
+  in search (Sys.getcwd ())
+in Sys.chdir root;;
+
+#use "topfind";;
+
+#thread
+
+#require "lwt";;
+#require "lwt.unix";;
+
+#require "osc";;
+#require "osc.lwt";;
+
+#require "text";;
+#require "text.pcre" ;;
+
+module Otext = Text;; 
+
+#require "batteries"
+open Batteries
+
+(* /// camlp4*)
+(* still bugged out..? *)
+(*
+#camlp4o ;;
+(*#require "utop.camlp4" ;;*)
+#require "text.pcre-syntax" ;;
+#require "lwt.syntax";;
+*)
+
+#directory "_build";;
+#directory "_build/src";;
+#directory "_build/lib_sc_src/"
+
+(*make #load directives*)
+#load "sC.cmo";;
+module S = SC.Synth
