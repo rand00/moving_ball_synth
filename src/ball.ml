@@ -41,29 +41,26 @@ let test = function
 
 let s_sinew c = S.synth c "sinew" [] 
 
-let set_freq s = function
-  | Some v -> 
-    sleep 0.01; 
-    S.set s [("freq", `I v)]
-  | None -> ()
+let set_freq s v = S.set s [("freq", `I v)]
 
-let apply_x f = function
-  | Some (x,_,_) -> Some (f x)
-  | None -> None
+let apply_x f (x, _, _) = f x
 
-let map_gt n x = if x < n then (Int.abs (x-n)) + n else x
+let bounce_minval n x = if x < n then (Int.abs (x-n)) + n else x
 
 let test_x = function 
     Some v -> Printf.printf "mapped x: %d\n" v
   | None -> print_endline "failed input"
 
+let ( >>= ) = Option.bind
+and ( >>| ) x f = Option.map f x
 
 let _ =
 
-  let basefreq = 
+  let freq_base = 
     if Array.length Sys.argv > 1 then 
       Int.of_string(Sys.argv.(1)) 
-    else 300 in
+    else 300 
+  in
   let _ = SC.Server.run_script () in 
   let _ = sleep 10. in 
   let c = SC.Client.make () in
@@ -72,9 +69,10 @@ let _ =
 
   while true do
     match_xyz (read_line ()) 
-    |> apply_x (map_gt basefreq)
-    |> (function Some x -> Some (Int.mul 2 x) | None -> None)
-    |> set_freq s
+    >>| apply_x (bounce_minval freq_base)
+    >>| Int.mul 2
+    >>| set_freq s
+    |> ignore
   done;
 
 
