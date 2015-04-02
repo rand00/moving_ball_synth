@@ -5,6 +5,8 @@ module S = SC.Synth
 
 let sleep t = Lwt_main.run (Lwt_unix.sleep t)
 
+(**Functions for reading input*)
+
 (**matching on text-output from 'imu'*)
 let match_xyz s = 
   let int = Int.of_string in
@@ -35,24 +37,52 @@ let read_next () =
   done;
   Buffer.contents b
 
-let test = function
-  | Some (x, y, z) -> Printf.printf "x = %d, y = %d, z = %d\n" x y z
-  | None -> print_endline "No values were found"
+(**For handling a potential flow of side-effecting func's*)
+let ( >>= ) = Option.bind
+and ( >>| ) x f = Option.map f x
+
+
+(**Functions for handling synths *)
 
 let s_sinew c = S.synth c "sinew" [] 
 
 let set_freq s v = S.set s [("freq", `I v)]
 
+(**Functions for manipulating input-values *)
+
 let apply_x f (x, _, _) = f x
 
 let bounce_minval n x = if x < n then (Int.abs (x-n)) + n else x
+
+(*gomaybe make some more tests (min != max)*)
+let map_range (xmin, xmax) (ymin, ymax) x = 
+  if x < xmin || x > xmax then
+    Printf.printf 
+      "Ball: map_range: The input-value, %f, exceeded the \
+       input-range from %f to %f." 
+      x xmin xmax;
+  if xmin +. 0.0001 >= xmax then 
+    ymin
+  else
+    let range_x = xmax -. xmin in
+    let x_pct = (x -. xmin) /. range_x 
+    in
+    let range_y = ymax -. ymin in
+    let y = (x_pct *. range_y) +. ymin 
+    in y
+
+
+(**Tests*)
 
 let test_x = function 
     Some v -> Printf.printf "mapped x: %d\n" v
   | None -> print_endline "failed input"
 
-let ( >>= ) = Option.bind
-and ( >>| ) x f = Option.map f x
+let test = function
+  | Some (x, y, z) -> Printf.printf "x = %d, y = %d, z = %d\n" x y z
+  | None -> print_endline "No values were found"
+
+
 
 
 
