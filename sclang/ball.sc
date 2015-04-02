@@ -1,3 +1,11 @@
+// Set environment
+SynthDef.synthDefDir = "/home/rand/code/installations/moving_ball_synth/synths";
+// Visualizations - setup
+FreqScope.new;
+Stethoscope(s); //< only works on internal server
+
+//-----------------------------------------------------------------------
+
 { 
 	var lfo_freq = MouseX.kr(0.01, 300)+(SinOsc.kr(0.01) * 300);
 	var freq = SinOsc.kr(lfo_freq)*MouseY.kr(100,1100);
@@ -20,14 +28,6 @@
 	)
 }.play;
 //< ball ? 
-// Set environment
-SynthDef.synthDefDir = "/home/rand/code/installations/moving_ball_synth/synths";
-// Visualizations - setup
-FreqScope.new;
-Stethoscope(s); //< only works on internal server
-
-//-----------------------------------------------------------------------
-
 
 { 
 	var lfo_freq = MouseX.kr(0.01, 300);
