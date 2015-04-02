@@ -1,5 +1,5 @@
 // Set environment
-SynthDef.synthDefDir = "/home/rand/code/installations/moving_ball_synth/synths";
+SynthDef.synthDefDir = "/home/pi/code/moving_ball_synth/synths";
 // Visualizations - setup
 FreqScope.new;
 Stethoscope(s); //< only works on internal server
@@ -42,6 +42,7 @@ Stethoscope(s); //< only works on internal server
 //goo
 
 
+
 SynthDef( \raw_grinder, 
 	{| lfo_freq = 120, freq = 200, imp_freq = 60 |
 		var timbre, sig;
@@ -58,7 +59,7 @@ SynthDef( \raw_grinder,
 		);
 		Out.ar( [0,1], sig);
 	}
-).add;//add;
+).writeDefFile;//add;//add;
 
 x = Synth(\raw_grinder);
 
