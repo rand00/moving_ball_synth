@@ -39,6 +39,7 @@ type input_state = {
   x : value;
   y : value;
   z : value;
+  i : int;
 }
 
 let set_min_max v_wrap v = {
@@ -58,7 +59,11 @@ let map_range_3 st x y z =
   and y' = aux st.y y
   and z' = aux st.z z
   in (x', y', z')
-  
+
+let print_values st = 
+  Printf.printf "X prev %f \t X min %f \t X max %f" st.x.prev st.x.min st.x.max;
+  Printf.printf "Y prev %f \t Y min %f \t Y max %f" st.y.prev st.y.min st.y.max;
+  Printf.printf "Z prev %f \t Z min %f \t Z max %f" st.z.prev st.z.min st.z.max
 
 let rec loop st s =
   read_line () |> match_xyz
@@ -67,6 +72,7 @@ let rec loop st s =
   | Some (x, y, z) -> 
     let x, y, z = (float x), (float y), (float z) in
     let st = { 
+      st with
       x = set_min_max st.x x;
       y = set_min_max st.y y;
       z = set_min_max st.z z;
@@ -79,10 +85,13 @@ let rec loop st s =
         ("imp_freq", `F z')
       ] 
     in
+    let _ = if st.i mod 40 = 0 then print_values st
+    in
     let st = { 
       x = { st.x with prev = x' };
       y = { st.y with prev = y' };
       z = { st.z with prev = z' };
+      i = succ st.i;
     } 
     in loop st s
 
@@ -101,6 +110,7 @@ let run_3_mapped_ranges () =
     x = { std_values with out_min = 0.01; out_max = 300. };
     y = { std_values with out_min = 30.; out_max = 1100. };
     z = { std_values with out_min = 10.; out_max = 80. };
+    i = 0;
   } 
   in loop st s
 
