@@ -96,7 +96,7 @@ let std_values = {
 
 let run_3_mapped_ranges () =
   let c = init () in
-  let s = s_sinew c in
+  let s = S.synth c "raw_grinder" [] in
   let st = {
     x = { std_values with out_min = 0.01; out_max = 300. };
     y = { std_values with out_min = 30.; out_max = 1100. };
