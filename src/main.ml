@@ -61,9 +61,9 @@ let map_range_3 st x y z =
   in (x', y', z')
 
 let print_values st = 
-  Printf.printf "X prev %f \t X min %f \t X max %f" st.x.prev st.x.min st.x.max;
-  Printf.printf "Y prev %f \t Y min %f \t Y max %f" st.y.prev st.y.min st.y.max;
-  Printf.printf "Z prev %f \t Z min %f \t Z max %f" st.z.prev st.z.min st.z.max
+  Printf.printf "X prev %f \t X min %f \t X max %f\n" st.x.prev st.x.min st.x.max;
+  Printf.printf "Y prev %f \t Y min %f \t Y max %f\n" st.y.prev st.y.min st.y.max;
+  Printf.printf "Z prev %f \t Z min %f \t Z max %f\n" st.z.prev st.z.min st.z.max
 
 let rec loop st s =
   read_line () |> match_xyz
@@ -85,7 +85,7 @@ let rec loop st s =
         ("imp_freq", `F z')
       ] 
     in
-    let _ = if st.i mod 40 = 0 then print_values st
+    let _ = if st.i mod 200 = 0 then print_values st
     in
     let st = { 
       x = { st.x with prev = x' };
