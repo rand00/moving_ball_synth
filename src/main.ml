@@ -53,7 +53,7 @@ let map_range_3 st x y z =
     map_range 
       (v_wrap.min, v_wrap.max)
       (v_wrap.out_min, v_wrap.out_max)
-      (x) 
+      (v) 
   in 
   let x' = aux st.x x
   and y' = aux st.y y
@@ -85,7 +85,7 @@ let rec loop st s =
         ("imp_freq", `F z')
       ] 
     in
-    let _ = if st.i mod 200 = 0 then print_values st
+    let _ = if st.i mod 40 = 0 then print_values st
     in
     let st = { 
       x = { st.x with prev = x' };
