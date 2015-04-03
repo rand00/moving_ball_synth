@@ -59,7 +59,7 @@ let map_range (xmin, xmax) (ymin, ymax) x =
   if x < xmin || x > xmax then
     Printf.printf 
       "Ball: map_range: The input-value, %f, exceeded the \
-       input-range from %f to %f." 
+       input-range from %f to %f.\n" 
       x xmin xmax;
   if xmin +. 0.0001 >= xmax then 
     ymin
